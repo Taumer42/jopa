@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <img id="target" src="jopa.png" alt="Click Target">
+        <div class="slap-counter">Slaps: <span id="counter">0</span></div>
+        <div class="energy-bar-container">
+            <div id="energy-bar" class="energy-bar"></div>
+        </div>
+        <button id="start-mini-game" class="mini-game-button">Start Mini-game</button>
+    </div>
+    <div id="mini-game" class="mini-game hidden">
+        <div id="triangle" class="triangle"></div>
+        <div id="mini-game-counter">Score: <span id="mini-score">0</span></div>
+        <button id="close-mini-game" class="close-button">Close Mini-game</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
