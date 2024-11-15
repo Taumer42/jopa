@@ -38,7 +38,7 @@ function showHitEffect(event) {
 
 // Функция для удара
 function slap(event) {
-    if (energy >= 5) {
+    if (energy >= energyDecrease) {
         counter++;
         counterDisplay.textContent = counter;
 
@@ -52,7 +52,7 @@ function slap(event) {
         // Обновляем счет в базе данных
         updateScore(10);
     } else {
-        alert("Недостаточно энергии для удара!");
+        displayLowEnergyMessage();
     }
 }
 
@@ -110,8 +110,13 @@ function startMiniGame() {
             rectanglesDropped++;
         }, 500);
     } else {
-        alert("Недостаточно энергии для запуска мини-игры!");
+        displayLowEnergyMessage();
     }
+}
+
+// Функция отображения сообщения об энергии
+function displayLowEnergyMessage() {
+    alert("Недостаточно энергии для действия!");
 }
 
 // Завершение мини-игры
@@ -154,19 +159,19 @@ function createFallingRectangle() {
 }
 
 // Движение треугольника и объекта
-document.addEventListener('mousemove', (event) => {
+function handleMouseMove(event) {
     if (miniGameActive) {
         // Поднимаем треугольник на треть экрана
         triangle.style.left = `${event.clientX - 25}px`;
         triangle.style.top = `${window.innerHeight * 2 / 3}px`;
     }
-});
+}
+
+document.addEventListener('mousemove', handleMouseMove);
 
 // Инициализация игры
 document.addEventListener('DOMContentLoaded', () => {
-    // Обработчики событий
     target.addEventListener('click', slap);
     miniGameButton.addEventListener('click', startMiniGame);
     closeMiniGameButton.addEventListener('click', endMiniGame);
 });
-

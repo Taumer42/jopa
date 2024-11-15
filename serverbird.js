@@ -3,8 +3,9 @@ const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const cors = require('cors');
+require('dotenv').config();
 const app = express();
-const port = 8000;
+const port = process.env.PORT || 8000;
 
 const { getTopUsers } = require('./leaders');
 
@@ -19,8 +20,11 @@ const db = new sqlite3.Database('scores.db');
 // Обновление очков
 app.post('/api/updateScore', (req, res) => {
     const { user_id, score } = req.body;
-    const query = `UPDATE scores SET score = score + ? WHERE user_id = ?`;
+    if (!user_id || typeof score !== 'number') {
+        return res.status(400).json({ error: 'Invalid input data' });
+    }
 
+    const query = `UPDATE scores SET score = score + ? WHERE user_id = ?`;
     db.run(query, [score, user_id], function (err) {
         if (err) {
             return res.status(500).json({ error: 'Database error' });
@@ -32,8 +36,11 @@ app.post('/api/updateScore', (req, res) => {
 // Получение текущих очков пользователя
 app.get('/api/getScore', (req, res) => {
     const user_id = req.query.user_id;
-    const query = `SELECT score FROM scores WHERE user_id = ?`;
+    if (!user_id) {
+        return res.status(400).json({ error: 'Invalid user_id' });
+    }
 
+    const query = `SELECT score FROM scores WHERE user_id = ?`;
     db.get(query, [user_id], (err, row) => {
         if (err) {
             return res.status(500).json({ error: 'Database error' });

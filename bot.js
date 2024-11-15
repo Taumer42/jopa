@@ -1,7 +1,8 @@
 const { Telegraf } = require('telegraf');
 const sqlite3 = require('sqlite3').verbose();
+require('dotenv').config();
 const db = new sqlite3.Database('scores.db');
-const bot = new Telegraf('7678060626:AAH7_mDKjPBx9PUSb3SyMgyHu0OljGfhgZc');
+const bot = new Telegraf(process.env.BOT_TOKEN);
 
 // Команда /start для запуска игры
 bot.command('start', async (ctx) => {
